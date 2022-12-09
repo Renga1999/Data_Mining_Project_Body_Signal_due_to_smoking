@@ -1,0 +1,27 @@
+height              age                 -0.48 -1
+triglyceride        HDL                 -0.41
+HDL                 waist               -0.38
+HDL                 weight              -0.36
+age                 weight              -0.32
+weight              serumcreatinine      0.32
+waist               systolic             0.32
+triglyceride        weight               0.32
+ALT                 Gtp                  0.34
+righteyesight       lefteyesight         0.35  
+triglyceride        waist                0.36
+hemoglobin          serumcreatinine      0.37
+height              waist                0.38 ---
+Gtp                 AST                  0.38
+serumcreatinine     height               0.38
+waist               hemoglobin           0.39
+height              smoking              0.40
+smoking             hemoglobin           0.40
+hemoglobin          weight               0.49
+hearing(right)      hearing(left)        0.51 
+height              hemoglobin           0.54 -1
+height              weight               0.68
+AST                 ALT                  0.74
+Cholesterol         LDL                  0.74
+systolic            relaxation           0.76
+weight              waist                0.82
+
