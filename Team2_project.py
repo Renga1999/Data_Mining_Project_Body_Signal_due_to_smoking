@@ -10,7 +10,7 @@ from sklearn import metrics
 
 # %%
 # reading the source file 
-df = pd.read_csv("smoking.csv")
+df = pd.read_csv("E:\DataMining Project\Data_Mining_Project_Body_Signal_due_to_smoking\smoking.csv")
 df.head()
 
 # %% [markdown]
@@ -224,6 +224,7 @@ sns.boxplot(data= df , x ="gender",y="height(cm)",hue= "smoking")
 
 df['smoking'].value_counts(normalize = True)
 
+
 # %%
 # Distribution of the Target variable before balancing
 
@@ -283,7 +284,7 @@ plt.legend()
 plt.show()
 
 # %% [markdown]
-# # Modelling 
+# # Modeling 
 
 # %%
 from sklearn.linear_model import LogisticRegression
@@ -317,6 +318,7 @@ y_train = y_res
 print(X_train.shape)
 print(y_train.shape)
 
+
 # %% [markdown]
 # Logistic Regression 
 
@@ -348,7 +350,6 @@ print(classification_report(y_test, y_pred))
 # printing the AUC-ROC curve 
 
 disp = RocCurveDisplay.from_estimator(model, X_test, y_test, alpha=0.8)
-
 plt.show()
 
 # %% [markdown]
@@ -489,7 +490,7 @@ disp = RocCurveDisplay.from_estimator(model4, X_test1, y_test, alpha=0.8)
 plt.show()
 
 # %% [markdown]
-# Building the model after scaling the values
+# Building the Random forest model after scaling the values
 
 # %%
 # Looking at the numerical data to scale those numerical data 
