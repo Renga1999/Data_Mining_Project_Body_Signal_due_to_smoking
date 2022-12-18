@@ -10,7 +10,7 @@ from sklearn import metrics
 
 # %%
 # reading the source file 
-df = pd.read_csv("E:\DataMining Project\Data_Mining_Project_Body_Signal_due_to_smoking\smoking.csv")
+df = pd.read_csv("smoking.csv")
 df.head()
 
 # %% [markdown]
