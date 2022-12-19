@@ -61,6 +61,7 @@ df.describe()
 df.isnull().sum()
 
 # %%
+# Visualizing a pandas correlation matrix using Seaborn
 # plotting the correlation to see which variables are strongly correlated 
 sns.heatmap(df.corr().round(3), annot= True).figure.set_size_inches(20, 10)
 plt.title(label="Correlation plot for the dataset")
@@ -69,12 +70,13 @@ plt.title(label="Correlation plot for the dataset")
 # # Exploratory Data Analysis 
 
 # %%
-
+# Calculating a correlation matrix with Pandas
 correlation_mat1 = df.corr().round(2)
 # .style.background_gradient(cmap = "magma")
 correlation_mat1
 
 # %%
+#Unstacking the data frame and selecting the negative and positive relationships
 corr_pairs1 = correlation_mat1.unstack()
 
 with pd.option_context('display.max_rows', None,):
@@ -86,6 +88,42 @@ sorted_pairs1 = corr_pairs1.sort_values(kind="quicksort")
 
 with pd.option_context('display.max_rows', None,):
     print(sorted_pairs1)
+
+# %%
+# Since we want to select strong relationships, we need to be able to select values greater than 
+# or equal to 0.3 and less than or equal to -0.3 
+# Filtering the series based on the absolute value.
+strong_pairs1 = sorted_pairs1[abs(sorted_pairs1) > 0.3]
+df5 = pd.DataFrame(strong_pairs1)
+with pd.option_context('display.max_rows', None,):
+    print(df5)
+
+# %%
+
+# Using Variance inflation factor to detect if Multicollinearity exists or not.
+# load statmodels functions
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
+
+# compute the vif for all given features
+def compute_vif(considered_features):
+    
+    X = df[considered_features]
+    # the calculation of variance inflation requires a constant
+    X['intercept'] = 1
+    
+    # create dataframe to store vif values
+    vif = pd.DataFrame()
+    vif["Variable"] = X.columns
+    vif["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    vif = vif[vif['Variable']!='intercept']
+    return vif
+
+# %%
+considered_features = ['age','height(cm)','weight(kg)','waist(cm)','systolic','relaxation','fasting blood sugar','Cholesterol','triglyceride','AST','ALT','Gtp','HDL','LDL','hemoglobin','Urine protein','serum creatinine']
+compute_vif(considered_features).sort_values('VIF', ascending=False)
+
+# %%
 
 # %%
 # checking for data imbalance 
