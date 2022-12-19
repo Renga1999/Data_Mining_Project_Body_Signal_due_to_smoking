@@ -76,7 +76,7 @@ correlation_mat1 = df.corr().round(2)
 correlation_mat1
 
 # %%
-#Unstacking the data frame and selecting the negative and positive relationships
+# Unstacking the data frame and selecting the negative and positive relationships
 corr_pairs1 = correlation_mat1.unstack()
 
 with pd.option_context('display.max_rows', None,):
@@ -144,7 +144,7 @@ labels = ["Males", "Females"]
 
 plt.figure(figsize = [7, 7], clear = False , facecolor = '#e6f0e7')
 df["gender"].value_counts().plot.pie(colors=colors, labels=labels, 
-                                    explode=explode, autopct = '%1.0f%%').set_title("Pie Chart showing Frequency of Gender types");
+                                    explode=explode, autopct = '%1.0f%%').set_title("Pie Chart showing Frequency of Gender types")
 
 # %%
 #Plot histograms for all the numerical variables
@@ -167,12 +167,12 @@ plt.tight_layout()
 # %%
 # checking the distribution of hearing(left)
 
-sns.displot(df["hearing(left)"])
+sns.displot(df["hearing(left)"]).set(title = "Distribution of hearing left")
 
 # %%
 # checking the distribution of hearing(right)
 
-sns.displot(df["hearing(right)"])
+sns.displot(df["hearing(right)"]).set(title = "Distribution of hearing right")
 
 # %%
 # checking how many unique values are on hearing left 
@@ -182,22 +182,22 @@ df["hearing(left)"].unique()
 # %%
 # Distribution of Cholesterol
 
-sns.displot(df["Cholesterol"])
+sns.displot(df["Cholesterol"]).set(title = "Distribution of Cholesterol")
 
 # %%
 # Distribution of systolic
 
-sns.displot(df["systolic"])
+sns.displot(df["systolic"]).set(title = "Distribution of Systolic")
 
 # %%
 # Distribution of relaxation
 
-sns.displot(df["relaxation"])
+sns.displot(df["relaxation"]).set(title = "Distribution of Relaxation")
 
 # %%
 # Distribution of triglyceride
 
-sns.displot(df["triglyceride"])
+sns.displot(df["triglyceride"]).set(title = "Distribution of Triglyceride")
 
 # %%
 
@@ -208,7 +208,7 @@ x
 
 
 # %% [markdown]
-# We observe that the 244 samples are distributed as follows:
+# We observe that the samples are distributed as follows:
 
 #19596 male smokers 
 #15805 non-smoking men
@@ -221,7 +221,7 @@ sns.catplot(x = "gender",
             kind = "box",
             hue = "smoking",
             data = df, saturation = 4, height = 4, aspect = 1.5,
-            margin_titles = True).set(title = "Age by Gender and Smoking");
+            margin_titles = True).set(title = "Age by Gender and Smoking")
 
 # %%
 # Height (cm) by Gender and Smoking
@@ -231,7 +231,7 @@ sns.catplot(x = "gender",
             kind = "box",
             hue = "smoking",
             data = df, saturation = 4, height = 5, aspect = 1.5,
-            margin_titles = True).set(title = "Height (cm) by Gender and Smoking");
+            margin_titles = True).set(title = "Height (cm) by Gender and Smoking")
 
 # %%
 
@@ -245,33 +245,33 @@ sns.catplot(x = "gender",
 # %%
 # checking the relationship between triglyceride, fasting blood sugar by gender
 
-sns.scatterplot(data = df, y = "triglyceride", x= "fasting blood sugar",hue = "gender",size= "smoking")
+sns.scatterplot(data = df, y = "triglyceride", x= "fasting blood sugar",hue = "gender",size= "smoking").set(title = "Relationship between triglyceride, fasting blood sugar by gender")
 
 # %%
 # checking the relationship between Cholesterol, fasting blood sugar by gender
 
-sns.scatterplot(data = df, y = "Cholesterol", x= "fasting blood sugar",hue = "gender")
+sns.scatterplot(data = df, y = "Cholesterol", x= "fasting blood sugar",hue = "gender").set(title = "Relationship between Cholesterol, fasting blood sugar by gender")
 
 # %%
 # boxplot for how cholestrol is for different genders based on their smoking status 
 
-sns.boxplot(data = df, x ="gender" , y= "Cholesterol", hue="smoking")
+sns.boxplot(data = df, x ="gender" , y= "Cholesterol", hue="smoking").set(title = "Relationship between Cholesterol, smoking by gender")
 
 # %%
 # checking the relationship between fasting blood sugar by genders based on their smoking status
 
-sns.boxplot(data = df, x ="smoking" , y= "fasting blood sugar",hue="gender")
+sns.boxplot(data = df, x ="smoking" , y= "fasting blood sugar",hue="gender").set(title = "Relationship between Fasting Blood Sugar, smoking by gender")
 
 # %%
 # checking the relationship for 
 # by genders based on their smoking status
 
-sns.boxplot(data = df, x ="smoking" , y= "systolic",hue="gender")
+sns.boxplot(data = df, x ="smoking" , y= "systolic",hue="gender").set(title = "Relationship between Systolic, smoking by gender")
 
 # %%
 # checking the relationship between smoking and ALT 
 
-sns.boxplot(data = df, x ="smoking" , y= "ALT")
+sns.boxplot(data = df, x ="smoking" , y= "ALT").set(title = "Relationship between smoking and ALT")
 
 # %%
 # Relationship between smoking and relaxation
@@ -281,22 +281,22 @@ sns.boxplot(data = df, x ="gender" , y= "relaxation",hue="smoking").set(title = 
 # %%
 # checking the relationship for triglyceride by genders based on their smoking status
 
-sns.boxplot(data = df, x ="smoking" , y= "triglyceride",hue="gender")
+sns.boxplot(data = df, x ="smoking" , y= "triglyceride",hue="gender").set(title = "Relationship for triglyceride by genders based on their smoking status")
 
 # %%
 # checking the relationship for CHolesterol and hearing based on gender 
 
-sns.barplot(data = df, y = "Cholesterol", x= "hearing(left)",hue = "gender")
+sns.barplot(data = df, y = "Cholesterol", x= "hearing(left)",hue = "gender").set(title = "Relationship for Cholesterol and hearing(left) based on gender ")
 
 # %%
 # checking the relationship for hearing based on their smoking status
 
-sns.barplot(data = df, y = "hearing(right)", x= "smoking")
+sns.barplot(data = df, y = "hearing(right)", x= "smoking").set(title = "Relationship between hearing(right) and smoking")
 
 # %%
 # checking the relationship for age and height based on gender
 
-sns.boxplot(data = df, x = "age",y ="height(cm)",hue="gender")
+sns.boxplot(data = df, x = "age",y ="height(cm)",hue="gender").set(title = "Relationship for age and height based on gender")
 
 # %%
 #subsetting the data as males and females 
@@ -308,7 +308,7 @@ data_female = df[df["gender"]=="F"]
 # %%
 # scatter plot to see HDL and triglyceride for males
 
-sns.scatterplot(data = data_male, x = "HDL",y ="triglyceride",hue="gender")
+sns.scatterplot(data = data_male, x = "HDL",y ="triglyceride",hue="gender").set(title = "Relationship between HDL and triglyceride for males")
 
 # Your healthcare provider classifies high triglyceride levels as:
 
@@ -331,12 +331,7 @@ sns.scatterplot(data = data_male, x = "HDL",y ="triglyceride",hue="gender")
 
 # %%
 # scatter plot to see HDL and triglyceride for females
-sns.scatterplot(data = data_female, x = "HDL",y ="triglyceride",hue="gender")
-
-# %%
-# males tend to smoke in their early stage of life i.e around 20 years whereas women generally tend to start smoking most likely at the age of 30
-
-sns.boxplot(data= df , x ="gender",y="age",hue= "smoking").set(title = "Relationship between age and smoking")
+sns.scatterplot(data = data_female, x = "HDL",y ="triglyceride",hue="gender").set(title = "Relationship between HDL and triglyceride for females")
 
 # %%
 # Relationship between triglyceride and smoking based on gender
@@ -349,10 +344,6 @@ sns.boxplot(data= df , x ="gender",y="weight(kg)",hue= "smoking").set(title = "R
 # we can say that weight is not a major concern if a person smokes
 # generally we have a misconception that people who smoke tend to weigh less, but the obvservation does not prove our assumption.
 
-# %%
-# Relationship between gender, height and smoking 
-
-sns.boxplot(data= df , x ="gender",y="height(cm)",hue= "smoking")
 
 
 # %%
@@ -372,12 +363,12 @@ plt.show()
 summary=df.groupby(["gender","smoking"])["age","weight(kg)","height(cm)"].mean().round(0)
 summary.plot(kind="bar",figsize=(15,7))
 
-#%% [markdown]
-We can observe that for Female somking avg /> age= 46 ,weight =56 kg ,height 157 cm; non-somking ave / >age= 49 ,weight =56 kg ,height 165 cm
-and for Male somking avg /> age= 41 ,weight =72 kg ,height 170 cm; non-somking ave / >age= 42 ,weight =71 kg ,height 170 cm
+#%%
+# We can observe that for Female somking avg /> age= 46 ,weight =56 kg ,height 157 cm; non-somking ave / >age= 49 ,weight =56 kg ,height 165 cm
+# and for Male somking avg /> age= 41 ,weight =72 kg ,height 170 cm; non-somking ave / >age= 42 ,weight =71 kg ,height 170 cm
 # %%
 # Relationship between Hemoglobin and Smoking
-import seaborn as sns
+
 sns.catplot(x = "gender",
             y = "hemoglobin",
             hue = "smoking",
@@ -412,7 +403,7 @@ sns.catplot(x = "gender",
 # %%
 from imblearn.over_sampling import SMOTENC 
 from sklearn.model_selection import train_test_split
-from collections import Counter
+
 
 # %%
 # splitting the data into X and y
