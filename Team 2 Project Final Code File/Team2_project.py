@@ -69,6 +69,25 @@ plt.title(label="Correlation plot for the dataset")
 # # Exploratory Data Analysis 
 
 # %%
+
+correlation_mat1 = df.corr().round(2)
+# .style.background_gradient(cmap = "magma")
+correlation_mat1
+
+# %%
+corr_pairs1 = correlation_mat1.unstack()
+
+with pd.option_context('display.max_rows', None,):
+    print(corr_pairs1)
+
+# %%
+# Convert correlation matrix to 1-D Series and sort
+sorted_pairs1 = corr_pairs1.sort_values(kind="quicksort")
+
+with pd.option_context('display.max_rows', None,):
+    print(sorted_pairs1)
+
+# %%
 # checking for data imbalance 
 
 sns.countplot(df, x="smoking").set(title="Distribution of the target variable")
@@ -218,6 +237,7 @@ sns.boxplot(data= df , x ="gender",y="weight(kg)",hue= "smoking").set(title = "R
 # Relationship between gender, height and smoking 
 
 sns.boxplot(data= df , x ="gender",y="height(cm)",hue= "smoking")
+
 
 # %%
 # Looking at the distribution of the target variable  
