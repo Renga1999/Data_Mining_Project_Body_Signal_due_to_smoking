@@ -92,6 +92,42 @@ with pd.option_context('display.max_rows', None,):
 
 sns.countplot(df, x="smoking").set(title="Distribution of the target variable")
 
+#%%
+
+# From this plot, we see the distribution of the entire data set categorized by genders.
+# 64% of our data set represents males, while 36% represents females.
+colors = ("#f2b31f", "#d59bf2")
+explode = (0.0, 0.15)
+labels = ["Males", "Females"]
+#fig, axes = plt.subplots(1, 2, figsize = (11, 7))
+#axes = axes.flatten()
+
+# sns.barplot(x = df["gender"].value_counts().index,
+#             y = df["gender"].value_counts(),
+#             data = df, palette = "Spectral", saturation = 2).set(title = "Barplot showing Frequency of Gender types")
+
+plt.figure(figsize = [7, 7], clear = False , facecolor = '#e6f0e7')
+df["gender"].value_counts().plot.pie(colors=colors, labels=labels, 
+                                    explode=explode, autopct = '%1.0f%%').set_title("Pie Chart showing Frequency of Gender types");
+
+# %%
+#Plot histograms for all the numerical variables
+
+num_list = list(df.columns[2:8])
+
+fig = plt.figure(figsize=(10,45))
+
+for i in range(len(num_list)):
+    plt.subplot(15,2,i+1)
+    plt.title(num_list[i])
+    plt.hist(df[num_list[i]],color='#85a832',alpha=0.5)
+
+plt.tight_layout()
+
+# The numerical variables: age, height, weight and waist are normally distributed for the most part. 
+# The latter 3 show some skew (especially weight) but the normal pattern can still be seen.
+
+
 # %%
 # checking the distribution of hearing(left)
 
@@ -127,6 +163,34 @@ sns.displot(df["relaxation"])
 
 sns.displot(df["triglyceride"])
 
+# %%
+# Relationship for Age by Gender and Smoking
+sns.catplot(x = "gender",
+            y = "age",
+            kind = "box",
+            hue = "smoking",
+            data = df, saturation = 4, height = 4, aspect = 1.5,
+            margin_titles = True).set(title = "Age by Gender and Smoking");
+
+# %%
+# Height (cm) by Gender and Smoking
+
+sns.catplot(x = "gender",
+            y = "height(cm)",
+            kind = "box",
+            hue = "smoking",
+            data = df, saturation = 4, height = 5, aspect = 1.5,
+            margin_titles = True).set(title = "Height (cm) by Gender and Smoking");
+
+# %%
+
+# Waist (cm) by Gender and Smoking
+sns.catplot(x = "gender",
+            y = "waist(cm)",
+            kind = "box",
+            hue = "smoking",
+            data = df, saturation = 4, height = 5, aspect = 1.5,
+            margin_titles = True).set(title = "Waist (cm) by Gender and Smoking");
 # %%
 # checking the relationship between triglyceride, fasting blood sugar by gender
 
