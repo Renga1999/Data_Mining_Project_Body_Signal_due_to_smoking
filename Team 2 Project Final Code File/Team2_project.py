@@ -61,6 +61,7 @@ df.describe()
 df.isnull().sum()
 
 # %%
+# Visualizing a pandas correlation matrix using Seaborn
 # plotting the correlation to see which variables are strongly correlated 
 sns.heatmap(df.corr().round(3), annot= True).figure.set_size_inches(20, 10)
 plt.title(label="Correlation plot for the dataset")
@@ -69,12 +70,13 @@ plt.title(label="Correlation plot for the dataset")
 # # Exploratory Data Analysis 
 
 # %%
-
+# Calculating a correlation matrix with Pandas
 correlation_mat1 = df.corr().round(2)
 # .style.background_gradient(cmap = "magma")
 correlation_mat1
 
 # %%
+#Unstacking the data frame and selecting the negative and positive relationships
 corr_pairs1 = correlation_mat1.unstack()
 
 with pd.option_context('display.max_rows', None,):
@@ -86,6 +88,40 @@ sorted_pairs1 = corr_pairs1.sort_values(kind="quicksort")
 
 with pd.option_context('display.max_rows', None,):
     print(sorted_pairs1)
+
+# %%
+# Since we want to select strong relationships, we need to be able to select values greater than 
+# or equal to 0.3 and less than or equal to -0.3 
+# Filtering the series based on the absolute value.
+strong_pairs1 = sorted_pairs1[abs(sorted_pairs1) > 0.3]
+df5 = pd.DataFrame(strong_pairs1)
+with pd.option_context('display.max_rows', None,):
+    print(df5)
+
+# %%
+
+# Using Variance inflation factor to detect if Multicollinearity exists or not.
+# load statmodels functions
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
+
+# compute the vif for all given features
+def compute_vif(considered_features):
+    
+    X = df[considered_features]
+    # the calculation of variance inflation requires a constant
+    X['intercept'] = 1
+    
+    # create dataframe to store vif values
+    vif = pd.DataFrame()
+    vif["Variable"] = X.columns
+    vif["VIF"] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    vif = vif[vif['Variable']!='intercept']
+    return vif
+
+# %%
+considered_features = ['age','height(cm)','weight(kg)','waist(cm)','systolic','relaxation','fasting blood sugar','Cholesterol','triglyceride','AST','ALT','Gtp','HDL','LDL','hemoglobin','Urine protein','serum creatinine']
+compute_vif(considered_features).sort_values('VIF', ascending=False)
 
 # %%
 # checking for data imbalance 
@@ -164,6 +200,21 @@ sns.displot(df["relaxation"])
 sns.displot(df["triglyceride"])
 
 # %%
+
+# We could find out the distribution of samples resulting from crossing the 
+# "gender" and "smoking" fields with the following instruction:
+x = pd.crosstab(df["gender"], df['smoking'])
+x
+
+
+# %% [markdown]
+# We observe that the 244 samples are distributed as follows:
+
+#19596 male smokers 
+#15805 non-smoking men
+#859 women smokers
+#19432 non-smoking women
+# %%
 # Relationship for Age by Gender and Smoking
 sns.catplot(x = "gender",
             y = "age",
@@ -212,7 +263,8 @@ sns.boxplot(data = df, x ="gender" , y= "Cholesterol", hue="smoking")
 sns.boxplot(data = df, x ="smoking" , y= "fasting blood sugar",hue="gender")
 
 # %%
-# checking the relationship for systolic by genders based on their smoking status
+# checking the relationship for 
+# by genders based on their smoking status
 
 sns.boxplot(data = df, x ="smoking" , y= "systolic",hue="gender")
 
@@ -315,6 +367,47 @@ df['smoking'].value_counts(normalize = True)
 sns.countplot(data=df,x='smoking', palette = "husl").set(title = "Distribution of the Target variable before balancing")
 plt.legend()
 plt.show()
+
+# %%
+summary=df.groupby(["gender","smoking"])["age","weight(kg)","height(cm)"].mean().round(0)
+summary.plot(kind="bar",figsize=(15,7))
+
+#%% [markdown]
+We can observe that for Female somking avg /> age= 46 ,weight =56 kg ,height 157 cm; non-somking ave / >age= 49 ,weight =56 kg ,height 165 cm
+and for Male somking avg /> age= 41 ,weight =72 kg ,height 170 cm; non-somking ave / >age= 42 ,weight =71 kg ,height 170 cm
+# %%
+# Relationship between Hemoglobin and Smoking
+import seaborn as sns
+sns.catplot(x = "gender",
+            y = "hemoglobin",
+            hue = "smoking",
+            kind = "violin",
+            color = '#FB2604',
+            data = df, saturation = 1, height = 7, aspect = 1.35,
+            margin_titles = True).set(title = "hemoglobin by gender and smoking");
+
+# %%
+
+#Relationship between smoking and Gender and Serum creatinine
+g = sns.catplot(x = "gender", y = "serum creatinine", col = "smoking", 
+                hue = "Urine protein",
+                data = df,
+                saturation = 1,
+                kind = "bar",
+                aspect = 0.99)
+
+(g.set_axis_labels("", "serum creatinine").set_xticklabels(["male", "female"])
+  .set_titles("{col_name} {col_var}").despine(left = True));    
+
+# %%
+# Relationship between HDL level and Smoking
+sns.catplot(x = "gender",
+            y = "HDL",
+            kind = "box",
+            hue = "smoking",
+            color = '#F83419',
+            data = df, saturation = 1, height = 7, aspect = 1.3,
+            margin_titles = True).set(title = "HDL level by gender and smoking");                      
 
 # %%
 from imblearn.over_sampling import SMOTENC 
